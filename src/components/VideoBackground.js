@@ -4,8 +4,6 @@ import useMovieTrailer from "../hooks/useMovieTrailer";
 const VideoBackground = ({ movieId, onVideoEnd }) => {
   const trailerKey = useMovieTrailer(movieId);
 
-  console.log(trailerKey);
-
   if (!trailerKey) {
     return <p className="text-white">Loading trailer...</p>;
   }
@@ -25,12 +23,12 @@ const VideoBackground = ({ movieId, onVideoEnd }) => {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-[calc(100vh-32px)]  overflow-hidden bg-gray-900">
       <YouTube
         videoId={trailerKey}
         opts={opts}
-        className="absolute top-0 left-0 w-full h-full object-cover"
-        onEnd={() => onVideoEnd && onVideoEnd()} // ✅ safe call
+        className="absolute top-0 left-0 w-full h-full object-cover bg-gray-900"
+        onEnd={() => onVideoEnd && onVideoEnd()} 
       />
     </div>
   );

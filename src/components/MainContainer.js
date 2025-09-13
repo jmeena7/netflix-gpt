@@ -20,7 +20,7 @@ const MainContainer = () => {
   const currentMovie = movies[currentMovieIndex];
 
   return (
-    <div className="relative w-full h-screen">
+    <div className="relative w-full h-screen -mt-14">
       {/* Background video will auto-change on trailer end */}
       <VideoBackground
         movieId={currentMovie.id}

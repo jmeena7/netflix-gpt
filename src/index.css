@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(0, 0, 0, 0.67);  /* ✅ white background hat jayega */
+  color: white;
+}

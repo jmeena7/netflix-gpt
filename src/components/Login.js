@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
-import { auth } from "../utils/firebase";  // firebase.js se auth import
+import { auth } from "../utils/firebase";  
 import { 
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
@@ -9,7 +9,6 @@ import {
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { userdefultprofile } from "../utils/constant";
-
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
@@ -31,9 +30,6 @@ const Login = () => {
           const userCredential = await signInWithEmailAndPassword(auth, emailValue, passwordValue);
           const user = userCredential.user;
 
-          console.log("User Details:", user);
-
-          // Login me updateProfile ki zarurat nahi
           const { uid, email, displayName, photoURL } = user;
           dispatch(addUser({ uid, email, displayName, photoURL }));
           alert("Login successful!");
@@ -43,47 +39,44 @@ const Login = () => {
           const userCredential = await createUserWithEmailAndPassword(auth, emailValue, passwordValue);
           const user = userCredential.user;
 
-          // Ab profile update karna hoga
           await updateProfile(user, {
             displayName: name.current.value,
-            photoURL:userdefultprofile // default profile image
+            photoURL:userdefultprofile 
           });
 
-          console.log("Profile updated successfully!");
-
-          // Fresh values fetch karke redux me daalna
           const { uid, email, displayName, photoURL } = auth.currentUser;
           dispatch(addUser({ uid, email, displayName, photoURL }));
 
           alert("Account created successfully!");
-         
         }
       } catch (err) {
         setError(err.message);
       }
     } else {
       setError("Email/Password field is empty!");
-      
     }
   };
 
   const toggleSignInForm = () => {
     setisSignInForm(!isSignInForm);
-    setError(""); // toggle karte hi error clear
+    setError("");
   };
 
   return (
-    <div className="h-screen bg-[url('https://assets.nflxext.com/ffe/siteui/vlv3/dc1cf82d-97c9-409f-b7c8-6ac1718946d6/14a8fe85-b6f4-4c06-8eaf-eccf3276d557/IN-en-20230911-popsignuptwoweeks-perspective_alpha_website_small.jpg')] bg-cover bg-center relative">
+    <div 
+      className="h-screen w-screen bg-cover bg-center relative"
+      style={{ backgroundImage: "url('/BgImage.jpg')" }} // ✅ Public folder image
+    >
       <Header />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
+      {/* Dark overlay for better text contrast */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
-      {/* Login content centered */}
+      {/* Centered Form */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="bg-black bg-opacity-70 p-6 w-80 flex flex-col gap-4 rounded-lg"
+          className="bg-black bg-opacity-75 p-6 w-80 flex flex-col gap-4 rounded-lg shadow-lg"
         >
           <h1 className="text-4xl font-bold mb-6">
             {isSignInForm ? "Sign In" : "Sign Up"}
@@ -121,9 +114,9 @@ const Login = () => {
             {isSignInForm ? "Sign In" : "Sign Up"}
           </button>
 
-          <p onClick={toggleSignInForm} className="cursor-pointer">
+          <p onClick={toggleSignInForm} className="cursor-pointer hover:underline">
             {isSignInForm
-              ? "Are you new to Netflix? Sign Up Now"
+              ? "Are you new? Sign Up Now"
               : "Already Registered? Please Sign In Now"}
           </p>
         </form>

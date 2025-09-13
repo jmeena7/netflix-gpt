@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { netflix_logo } from "../utils/constant";
 import { toggleGptSearchView } from "../utils/gptSlice";
 
 const Header = () => {
@@ -27,7 +26,7 @@ const Header = () => {
     dispatch(toggleGptSearchView());
   };
 
-  // Detect scroll to apply Netflix-like transparent to solid header
+  // Detect scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -53,13 +52,15 @@ const Header = () => {
   return (
     <header
       className={`w-screen fixed top-0 left-0 z-50 flex justify-between items-center px-6 md:px-12 py-4 transition-all duration-500 ${
-        isScrolled ? "bg-black/90 shadow-lg" : "bg-transparent"
+        isScrolled
+          ? "bg-gradient-to-r from-black/95 via-black/80 to-transparent backdrop-blur-md"
+          : "bg-gradient-to-r from-black/60 via-black/40 to-transparent"
       }`}
     >
       {/* Logo */}
       <img
-        src={netflix_logo}
-        alt="Netflix Logo"
+        src="/FlicksGPT_LOGO.gif"
+        alt="FliksGPT-logo"
         className="w-28 md:w-32 cursor-pointer object-contain"
         onClick={() => navigate("/browse")}
       />
